@@ -28,8 +28,21 @@ readline.question("Silahkan Input Kode Kurir (Ex. sicepat) => ", kurir => {
         fetch("https://api.econxn.id/v1/couriers/waybill/", options)
           .then(res => res.json())
           .then(json => {
-            if (json.status.code == 429) {
-              console.log(chalk.red("MAAF SERVER SUDAH MENCAPAI LIMIT HARIAN"));
+            if (
+              json.status.description ==
+              "Invalid waybill. Resi yang Anda masukkan salah atau belum terdaftar."
+            ) {
+              console.log(
+                chalk.yellow(
+                  "\nNomor Resi Tidak Bisa Di Track\natau Kurir Yang Anda Pilih Salah"
+                )
+              );
+            } else if (json.status.description == "Data is incomplete.") {
+              console.log(chalk.red("\nData Tidak Valid/Lengkap"));
+            } else if (json.status.code == 429) {
+              console.log(
+                chalk.red("\nMAAF SERVER SUDAH MENCAPAI LIMIT HARIAN")
+              );
             } else {
               console.log(
                 "RESI | KURIR (LAYANAN) : " +
