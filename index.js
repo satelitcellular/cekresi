@@ -79,12 +79,11 @@ readline.question("Silahkan Input Kode Kurir (Ex. sicepat) => ", kurir => {
                   chalk.yellow("STATUS : " + json.result.summary.status)
                 );
               }
-
-              if (
-                json.result.manifest[1].manifest_date == null ||
-                json.result.manifest[1].manifest_date == undefined
-              ) {
-                console.log("TGL PENGIRIMAN : TIDAK TERSEDIA");
+              let n = Object.keys(json.result.manifest).length;
+              if (n <= 1) {
+                console.log(
+                  "TGL PENGIRIMAN : " + chalk.yellow("BELUM TERSEDIA")
+                );
               } else {
                 console.log(
                   "TGL PENGIRIMAN : " +
@@ -95,7 +94,6 @@ readline.question("Silahkan Input Kode Kurir (Ex. sicepat) => ", kurir => {
               }
               console.log("==================================================");
               console.log("HISTORI : ");
-              let n = Object.keys(json.result.manifest).length;
               for (let i = 0; i <= n - 1; i++) {
                 console.log(
                   json.result.manifest[i].manifest_date +
